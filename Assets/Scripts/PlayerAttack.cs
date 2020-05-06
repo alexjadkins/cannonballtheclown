@@ -6,11 +6,13 @@ public class PlayerAttack : MonoBehaviour
 {
 
   public Collider2D slapCollider;
+  public Collider2D rollCollider;
   public Animator animator;
     // Start is called before the first frame update
     void Start()
     {
         slapCollider.enabled = false;
+        rollCollider.enabled = false;
     }
 
     // Update is called once per frame
@@ -23,8 +25,40 @@ public class PlayerAttack : MonoBehaviour
 
       }
 
-      if(animator.GetBool("IsSlap")==false)
+      if(animator.GetBool("isRoll")==true){
+        if(rollCollider.enabled == false)
+          rollCollider.enabled = true;
+
+      }
+
+      if(animator.GetBool("IsSlap")==false && animator.GetBool("isRoll")==false){
         slapCollider.enabled = false;
+        rollCollider.enabled = false;
+      }
+
+    }
+
+    void turnOnSlapCollider(){
+
+      slapCollider.enabled = true;
+
+    }
+
+    void turnOffSlapCollider(){
+
+      slapCollider.enabled = false;
+
+    }
+
+    void turnOnRollCollider(){
+
+      rollCollider.enabled = true;
+
+    }
+
+    void turnOffRollCollider(){
+
+      rollCollider.enabled = false;
 
     }
 }

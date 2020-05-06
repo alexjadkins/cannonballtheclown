@@ -8,6 +8,7 @@ public class Enemy_Pinman : MonoBehaviour
     public int maxHealth = 25;
     public int currentHealth;
     public Animator animator;
+    public Animator playerAnimator;
     public HealthBar healthBar;
 
     // Start is called before the first frame update
@@ -21,8 +22,11 @@ public class Enemy_Pinman : MonoBehaviour
     void Update()
     {
 
-        if(currentHealth <= 0)
-          animator.SetTrigger("Dead");
+        if(currentHealth <= 0){
+          animator.SetBool("Dead",true);
+          healthBar.enabled = false;
+        }
+
     }
 
     void TakeDamage(int damage){
@@ -32,9 +36,26 @@ public class Enemy_Pinman : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter2D(Collider2D other){
-      TakeDamage(5);
-      animator.SetTrigger("hurtTrig");
+    void fin_RollStun(){
 
+      animator.SetBool("RollStun",false);
+
+    }
+
+    void fin_Hurt(){
+        animator.SetBool("isHurt",false);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other){
+
+      if(playerAnimator.GetBool("IsSlap")==true){
+        if(animator.GetBool("RollStun")==false)
+          animator.SetBool("isHurt",true);
+        TakeDamage(5);
+      }
+      else if(playerAnimator.GetBool("isRoll")==true){
+        TakeDamage(2);
+        animator.SetBool("RollStun",true);
+      }
     }
 }

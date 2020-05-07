@@ -8,6 +8,8 @@ public class PinmanMovement : MonoBehaviour
     public float speed;
     private Transform target;
     public Animator animator;
+    public Collider2D clapCollider;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +27,19 @@ public class PinmanMovement : MonoBehaviour
         animator.SetFloat("Vertical", transform.position.y);
         transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
 
+        if(Vector2.Distance(transform.position, target.position)<.25 && animator.GetBool("RollStun")==false && animator.GetBool("Dead")==false){
+          animator.SetBool("isClap",true);
+          if(target.gameObject.GetComponent<Animator>().GetBool("isHurt")==false){
+            target.gameObject.GetComponent<Player>().TakeDamage(5);
+            target.gameObject.GetComponent<Animator>().SetBool("isHurt",true);
+          }
+        }
       }
+    }
+
+    void fin_Clap(){
+        animator.SetBool("isClap",false);
+        clapCollider.enabled = false;
     }
 
     void moveInDirection(){

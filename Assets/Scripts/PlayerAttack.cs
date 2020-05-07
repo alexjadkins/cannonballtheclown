@@ -38,27 +38,4 @@ public class PlayerAttack : MonoBehaviour
 
     }
 
-    void turnOnSlapCollider(){
-
-      slapCollider.enabled = true;
-
-    }
-
-    void turnOffSlapCollider(){
-
-      slapCollider.enabled = false;
-
-    }
-
-    void turnOnRollCollider(){
-
-      rollCollider.enabled = true;
-
-    }
-
-    void turnOffRollCollider(){
-
-      rollCollider.enabled = false;
-
-    }
 }

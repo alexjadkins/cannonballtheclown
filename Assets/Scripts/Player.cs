@@ -7,8 +7,11 @@ public class Player : MonoBehaviour
 
     public int maxHealth = 100;
     public int currentHealth;
-
+    public Animator animator;
     public HealthBar healthBar;
+
+    public Collider2D cannonBody;
+    public Collider2D cannon_slapCol;
 
     // Start is called before the first frame update
     void Start()
@@ -24,10 +27,32 @@ public class Player : MonoBehaviour
           TakeDamage(10);
     }
 
-    void TakeDamage(int damage){
+    public void TakeDamage(int damage){
 
       currentHealth -= damage;
       healthBar.SetHealth(currentHealth);
 
     }
+
+    void fin_Hurt(){
+      animator.SetBool("isHurt",false);
+    }
+    void AddHealth(int health){
+
+      currentHealth += health;
+      healthBar.SetHealth(currentHealth);
+
+    }
+
+    /*private void OnTriggerEnter2D(Collider2D other){
+
+      Debug.Log("Collide");
+      if(other.gameObject.tag == "pinMan" && animator.GetBool("isRoll")==false){
+        if(cannonBody.IsTouching(other.gameObject.GetComponent<Enemy_Pinman>().getBody()))
+          TakeDamage(5);
+
+      }
+
+    }*/
+
 }

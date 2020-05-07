@@ -53,6 +53,9 @@ public class Enemy_Pinman : MonoBehaviour
 
     }
 
+    void test(){
+      
+    }
     void fin_Hurt(){
         animator.SetBool("isHurt",false);
     }

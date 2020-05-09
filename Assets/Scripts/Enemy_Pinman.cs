@@ -16,11 +16,14 @@ public class Enemy_Pinman : MonoBehaviour
     public Collider2D cannon_rollCol;
     public Collider2D cannon_slapCol;
     public Collider2D cannon_Body;
+
+    public AudioSource hit;
     // Start is called before the first frame update
     void Start()
     {
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
+        //hit = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -53,9 +56,6 @@ public class Enemy_Pinman : MonoBehaviour
 
     }
 
-    void test(){
-      
-    }
     void fin_Hurt(){
         animator.SetBool("isHurt",false);
     }
@@ -72,13 +72,10 @@ public class Enemy_Pinman : MonoBehaviour
         if(animator.GetBool("RollStun")==false)
           animator.SetBool("isHurt",true);
         TakeDamage(5);
-
-
-        /*if(pin_body.IsTouching(cannon_Body))
-          AddHealth(5);*/
       }
       else if(playerAnimator.GetBool("isRoll")==true && pin_body.IsTouching(cannon_rollCol) && animator.GetBool("RollStun")==false){
         TakeDamage(2);
+        hit.Play();
         animator.SetBool("RollStun",true);
       }
 

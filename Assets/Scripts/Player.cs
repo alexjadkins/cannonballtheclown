@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     public int currentHealth;
     public Animator animator;
     public HealthBar healthBar;
-
+  
     public Collider2D cannonBody;
     public Collider2D cannon_slapCol;
 
@@ -37,22 +37,25 @@ public class Player : MonoBehaviour
     void fin_Hurt(){
       animator.SetBool("isHurt",false);
     }
-    void AddHealth(int health){
+
+    public void AddHealth(int health){
 
       currentHealth += health;
       healthBar.SetHealth(currentHealth);
 
     }
 
-    /*private void OnTriggerEnter2D(Collider2D other){
+    private void OnTriggerEnter2D(Collider2D other){
 
-      Debug.Log("Collide");
-      if(other.gameObject.tag == "pinMan" && animator.GetBool("isRoll")==false){
-        if(cannonBody.IsTouching(other.gameObject.GetComponent<Enemy_Pinman>().getBody()))
-          TakeDamage(5);
+      if(other.gameObject.tag == "pinClap" && animator.GetBool("isRoll")==false){
+        if(animator.GetBool("isHurt")==false){
+          animator.SetBool("isHurt",true);
+        }
+          TakeDamage(2);
+
 
       }
 
-    }*/
+    }
 
 }

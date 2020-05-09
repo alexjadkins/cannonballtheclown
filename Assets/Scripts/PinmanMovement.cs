@@ -9,16 +9,24 @@ public class PinmanMovement : MonoBehaviour
     private Transform target;
     public Animator animator;
     public Collider2D clapCollider;
+    public float attackDelayNum;
+    private bool wait;
+    private bool hasStarted;
 
     // Start is called before the first frame update
     void Start()
     {
         target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        wait = false;
+        hasStarted = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+
+      if(wait == true && hasStarted == false)
+        StartCoroutine("AttackDelay");
 
 
       if(animator.GetBool("Dead")==false && animator.GetBool("RollStun")==false && animator.GetBool("isHurt")==false){
@@ -27,19 +35,28 @@ public class PinmanMovement : MonoBehaviour
         animator.SetFloat("Vertical", transform.position.y);
         transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
 
-        if(Vector2.Distance(transform.position, target.position)<.25 && animator.GetBool("RollStun")==false && animator.GetBool("Dead")==false){
+        if(Vector2.Distance(transform.position, target.position)<.25 && animator.GetBool("RollStun")==false && animator.GetBool("Dead")==false && wait == false){
           animator.SetBool("isClap",true);
-          if(target.gameObject.GetComponent<Animator>().GetBool("isHurt")==false){
-            target.gameObject.GetComponent<Player>().TakeDamage(5);
-            target.gameObject.GetComponent<Animator>().SetBool("isHurt",true);
-          }
+          clapCollider.enabled = true; 
         }
       }
+
+
     }
 
     void fin_Clap(){
         animator.SetBool("isClap",false);
         clapCollider.enabled = false;
+        wait = true;
+    }
+
+    IEnumerator AttackDelay(){
+
+      hasStarted = true;
+      yield return new WaitForSeconds(attackDelayNum);
+      wait = false;
+      hasStarted = false;
+
     }
 
     void moveInDirection(){

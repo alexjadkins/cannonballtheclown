@@ -6,6 +6,20 @@ TagManager:
   tags:
   - pinMan
   - pinClap
+  - wall
+  - cannonSlap
+  - acrobat
+  - acrobatKick
+  - spawnpoint
+  - Rooms
+  - dark
+  - cannonBody
+  - cannonRoll
+  - activate
+  - ball
+  - bossBody
+  - whip
+  - hUp
   layers:
   - Default
   - TransparentFX
@@ -15,8 +29,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - roof
+  - room
   - 
   - 
   - 

@@ -22,7 +22,7 @@ public class PlayerAttack : MonoBehaviour
       if(animator.GetBool("IsSlap")==true){
         if(slapCollider.enabled == false)
           slapCollider.enabled = true;
-
+        playerAudioScript.PlaySound("cannonSlap");
       }
 
       if(animator.GetBool("isRoll")==true){

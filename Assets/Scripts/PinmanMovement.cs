@@ -12,35 +12,43 @@ public class PinmanMovement : MonoBehaviour
     public float attackDelayNum;
     private bool wait;
     private bool hasStarted;
+    public bool active;
 
     // Start is called before the first frame update
     void Start()
     {
-        target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        target = GameObject.FindGameObjectWithTag("cannonBody").GetComponent<Transform>();
         wait = false;
         hasStarted = false;
+        active = true;
     }
 
     // Update is called once per frame
     void Update()
     {
 
-      if(wait == true && hasStarted == false)
-        StartCoroutine("AttackDelay");
+      if(active == true){
+        if(wait == true && hasStarted == false)
+          StartCoroutine("AttackDelay");
 
 
-      if(animator.GetBool("Dead")==false && animator.GetBool("RollStun")==false && animator.GetBool("isHurt")==false){
+        if(animator.GetBool("Dead")==false && animator.GetBool("RollStun")==false && animator.GetBool("isHurt")==false){
 
-        animator.SetFloat("Horizontal", transform.position.x);
-        animator.SetFloat("Vertical", transform.position.y);
-        transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+          var heading = target.position - transform.position;
+          var distance = heading.magnitude;
+          var direction = heading / distance;
 
-        if(Vector2.Distance(transform.position, target.position)<.25 && animator.GetBool("RollStun")==false && animator.GetBool("Dead")==false && wait == false){
-          animator.SetBool("isClap",true);
-          clapCollider.enabled = true; 
+          animator.SetFloat("Horizontal", direction[0]);
+          animator.SetFloat("Vertical", direction[1]);
+          transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+
+          if(Vector2.Distance(transform.position, target.position)<.25 && animator.GetBool("RollStun")==false && animator.GetBool("Dead")==false && wait == false){
+            animator.SetBool("isClap",true);
+            clapCollider.enabled = true;
+          }
         }
-      }
 
+      }
 
     }
 
@@ -100,5 +108,13 @@ public class PinmanMovement : MonoBehaviour
 
     }
 
+    private void OnTriggerEnter2D(Collider2D other){
+
+      if(other.CompareTag("dark"))
+        active = false;
+      else if(other.CompareTag("activate"))
+        active = true;
+
+    }
 
 }

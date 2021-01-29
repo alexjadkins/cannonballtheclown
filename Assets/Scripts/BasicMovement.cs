@@ -7,11 +7,7 @@ public class BasicMovement : MonoBehaviour
 
     public Animator animator;
     float lastX, lastY;
-    //public Collider2D slapCollider= GetComponent<Collider2D>();
 
-  //  void Start(){
-  //    slapCollider.enabled = false;
-  //  }
     // Update is called once per frame
     void Update()
     {
@@ -35,14 +31,11 @@ public class BasicMovement : MonoBehaviour
 
       //if the user hits e, IsSlap is set to true, triggering the slap blend tree, uses .GetKeyDown to prevent holding
       //down e to continously slap
-      else if(animator.GetBool("isRoll")==false && Input.GetKeyDown(KeyCode.RightShift)){
+      else if(animator.GetBool("isRoll")==false && Input.GetKeyDown(KeyCode.RightShift) || Input.GetKeyDown(KeyCode.C)){
         animator.SetBool("IsSlap",true);
-      //  slapCollider.enabled = true;
       }
 
     }
-
-
 
     //Movement function, if the keys are let go then the last horizontal and vertical values are stored so the
     //idle blend tree can play the correct directional idle animation
@@ -124,11 +117,8 @@ public class BasicMovement : MonoBehaviour
     void Slap(){
       if(animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 && !animator.IsInTransition(0)){
         animator.SetBool("IsSlap",false);
-    //    slapCollider.enabled = true;
+
       }
     }
 
-  //  private void OnTriggerEnter2D(Collider2D other){
-//      Debug.Log("Slap hit");
-//    }
 }
